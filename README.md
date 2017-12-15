@@ -27,7 +27,7 @@ CREATE DATABASE stackoverflow2017
 
 Obs: restoring this dump would require at least 100 Gb of free space. If your Operation System runs in a partition with insufficient free space, create a tablespace pointing to a larger partition and associate the database to it by replacing the "TABLESPACE" value to the new tablespace name: `TABLESPACE = tablespacename`. 
 
-4. Assert that the database is sound. Execute the following SQL command: `select title,body,tags,tagssyn,code  from posts where title is not null limit 10`. The return should list the main fields for 10 posts. 
+4. Assert that the database is sound. Execute the following SQL command: `select title,body,tags,tagssyn,code  from posts where title is not null limit 10`. The return should list the main fields for 10 posts. Here, the column "body" should contains special html tags like `<p>`.  
 
 5. Assert Maven is correctly installed. In a Terminal enter with the command: `mvn --version`. This should return the version of Maven. 
 
@@ -35,7 +35,7 @@ Obs: restoring this dump would require at least 100 Gb of free space. If your Op
 
 1. Edit the file "application.properties" and set the your data_base password parameter. The file comes with default values for performing stemming and removing stop words. You need to fill only the variable: `spring.datasource.password=YOUR_DB_PASSWORD`.
 
-2. In a terminal, go to the Project_folder and build the jar file with the Maven command: `mvn package -Dmaven.test.skip=true`. Assert that duppredictor.jar is built under target folder. 
+2. In a terminal, go to the Project_folder and build the jar file with the Maven command: `mvn package -Dmaven.test.skip=true`. Assert that preprocessor.jar is built under target folder. 
 
 3. Go to Project_folder/target and run the command to execute the jar: `java -Xms1024M -Xmx20g -jar ./preprocessor.jar`. 
 
