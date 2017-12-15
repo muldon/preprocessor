@@ -33,7 +33,7 @@ Obs: restoring this dump would require at least 100 Gb of free space. If your Op
 
 ## Running the process
 
-1. Edit the file "application.properties" and set the your data_base password parameter. The file comes with default values for performing stemming and removing stop words. You need to fill only the variable: `spring.datasource.password=YOUR_DB_PASSWORD`.
+1. Edit the *application.properties* file under *src/main/resources/* and set the your data_base password parameter. The file comes with default values for performing stemming and removing stop words. You need to fill only the variable: `spring.datasource.password=YOUR_DB_PASSWORD`.
 
 2. In a terminal, go to the Project_folder and build the jar file with the Maven command: `mvn package -Dmaven.test.skip=true`. Assert that preprocessor.jar is built under target folder. 
 
