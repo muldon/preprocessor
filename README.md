@@ -7,7 +7,18 @@ A preprocessor of Stack Overflow dump to perform stemming, remove stop words, ge
 Softwares:
 1. [Java 1.8] 
 2. [Postgres 9.3]
-3. [PgAdmin] (we used PgAdmin 3) but feel free to use any DB tool for PostgreSQL. 
+3. [PgAdmin] (we used PgAdmin 3) but feel free to use any DB tool for PostgreSQL. Configure your DB to accept local connections. An example of pg_hba.conf configurations.
+
+```
+...
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+...
+```
+
 4. [Maven 3](https://maven.apache.org/)
 
 ### Installing the app.
@@ -33,7 +44,7 @@ Obs: restoring this dump would require at least 100 Gb of free space. If your Op
 
 ## Running the process
 
-1. Edit the *application.properties* file under *src/main/resources/* and set the your data_base password parameter. The file comes with default values for performing stemming and removing stop words. You need to fill only the variable: `spring.datasource.password=YOUR_DB_PASSWORD`.
+1. Edit the *application.properties* file under *src/main/resources/* and set the your data_base password parameter. The file comes with default values for performing stemming and removing stop words. You need to fill only variables: `spring.datasource.password=YOUR_DB_PASSWORD` and `spring.datasource.username` if your db user is not postgres. 
 
 2. In a terminal, go to the Project_folder and build the jar file with the Maven command: `mvn package -Dmaven.test.skip=true`. Assert that preprocessor.jar is built under target folder. 
 
