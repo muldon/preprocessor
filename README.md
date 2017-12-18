@@ -24,8 +24,6 @@ host    all             all             127.0.0.1/32            md5
 ### Installing the app.
 1. Download the [SO Dump of March 2017](http://lascam.facom.ufu.br/companion/duplicatequestion/backup_so_2017_raw_basic_tables_ok.backup) containing the original content downloaded from [SO Official Dump](https://archive.org/details/stackexchange). 
 
-. We provide two dumps where both contains the main tables we use. They differs only in **posts** table. In [Dump 1](http://lascam.facom.ufu.br/companion/duplicatequestion/backup_so_2017_raw_basic_tables_ok.backup), the table is stemmed and had the stop words removed. Also it has the synonyms of tags and code blocks already extracted. In [Dump 2](...), the table contains the original content. This process only makes sense if you download Dump 2 (the original content downloaded from [SO Official Dump](https://archive.org/details/stackexchange). 
-
 2. On your DB tool, create a new database named stackoverflow2017. This is a query example:
 ```
 CREATE DATABASE stackoverflow2017
