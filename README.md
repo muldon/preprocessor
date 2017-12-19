@@ -6,8 +6,7 @@ A preprocessor of Stack Overflow dump to perform stemming, remove stop words, ge
 
 Softwares:
 1. [Java 1.8] 
-2. [Postgres 9.3]
-3. [PgAdmin] (we used PgAdmin 3) but feel free to use any DB tool for PostgreSQL. Configure your DB to accept local connections. An example of *pg_hba.conf* configuration:
+2. [Postgres 9.3]. Configure your DB to accept local connections. An example of *pg_hba.conf* configuration:
 
 ```
 ...
@@ -18,6 +17,7 @@ local   all             all                                     md5
 host    all             all             127.0.0.1/32            md5
 ...
 ```
+3. [PgAdmin] (we used PgAdmin 3) but feel free to use any DB tool for PostgreSQL. 
 
 4. [Maven 3](https://maven.apache.org/)
 
