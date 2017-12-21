@@ -75,9 +75,8 @@ public class PreProcessorService {
 			}else{
 				question.setTitle(utils.tokenizeStopStem(title));
 				question.setBody(utils.tokenizeStopStem(body));
-				question.setTags(tags);
 			}
-																	
+			question.setTags(tags);														
 			postsRepository.save(question);
 					
 		}
