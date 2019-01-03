@@ -64,8 +64,7 @@ The logs are displayed in the terminal but you can check if the process ended su
 
 
 ## License
-???
-//This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 
 
