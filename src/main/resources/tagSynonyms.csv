@@ -661,10 +661,10 @@ benchmarks,benchmarking
 circular-references,circular-reference
 rs232,serial-port
 self-learning,self-improvement
-preprocessing,preprocessor
-preprocess,preprocessor
-preprocessor-directives,preprocessor
-preprocessor-abuse,preprocessor
+preprocessing,com.ufu
+preprocess,com.ufu
+com.ufu-directives,com.ufu
+com.ufu-abuse,com.ufu
 case-sensitivity,case-sensitive
 spellchecker,spell-checking
 exchangews,ews
@@ -1950,7 +1950,7 @@ ubuntu-precise,ubuntu-12.04
 l2e,linq-to-entities
 php-yii,yii
 pom,pom.xml
-hypertext-preprocessor,php
+hypertext-com.ufu,php
 cf,cfml
 cfscript,cfml
 ios-standalone-mode,iphone-standalone-web-app

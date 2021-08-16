@@ -2,8 +2,8 @@ package com.ufu.preprocessor.to;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,17 +14,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-@Table(name = "posts")
-public class Posts {
+@Table(name = "postsmin")
+public class Post {
 	private static final long serialVersionUID = -111652190111815641L;
 	@Id
     private Integer id;
 	
 	private String body;
 	
+	@Column(name="processedbody")
+    private String processedBody;
+	
+	@Column(name="processedbodylemma")
+    private String processedBodyLemma;
+	
 	private String title;
 	
-	 private String tags;
+	@Column(name="processedtitle")
+    private String processedTitle;
+	
+	@Column(name="processedtitlelemma")
+    private String processedTitleLemma;
+	
+	private String tags;
+	
+	private String code;
+	
+	@Column(name="processedcode")
+    private String processedCode;
     	
 	@Column(name="posttypeid")
 	private Integer postTypeId;
@@ -75,15 +92,43 @@ public class Posts {
 	@Column(name="communityowneddate")
 	private Timestamp communityOwnedDate;
 	
-	@Column(name="tagssyn")
+	@Transient
+	private List<Comment> comments;  //lista de ids de posts com maior similaridade ( maior para menor )
+	
+	
+	@Transient
+	private User user;
+	
+	@Transient
+	private Post parent;
+	
+	@Transient
+	private String titleVectors,tagVectors,bodyVectors, topicVectors;
+	
+	@Transient
+	private double similarityScore;
+	
+	@Transient
+	private Set<String> classesNames;
+	
+	@Transient
+	private ArrayList<Post> topKrelatedQuestions;  //lista de ids de posts com maior similaridade ( maior para menor )
+	
+	/*@Column(name="tagssyn")
 	private String tagsSyn;
 	
-	private String code;
+	private String code; */
+	
+	
+	
+	@Transient
+	private Integer relationTypeId;
+		
 
-	public Posts() {
+	public Post() {
 	}
 	
-	public Posts(Integer id) {
+	public Post(Integer id) {
 		this.id = id;
 	}
 	
@@ -102,7 +147,7 @@ public class Posts {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Posts other = (Posts) obj;
+		Post other = (Post) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -135,8 +180,54 @@ public class Posts {
 		this.title = title;
 	}
 
-	
-	
+	public String getTitleVectors() {
+		return titleVectors;
+	}
+
+	public void setTitleVectors(String titleVectors) {
+		this.titleVectors = titleVectors;
+	}
+
+	public String getTagVectors() {
+		return tagVectors;
+	}
+
+	public void setTagVectors(String tagVectors) {
+		this.tagVectors = tagVectors;
+	}
+
+	public String getBodyVectors() {
+		return bodyVectors;
+	}
+
+	public void setBodyVectors(String bodyVectors) {
+		this.bodyVectors = bodyVectors;
+	}
+
+	public String getTopicVectors() {
+		return topicVectors;
+	}
+
+	public void setTopicVectors(String topicVectors) {
+		this.topicVectors = topicVectors;
+	}
+
+	public double getSimilarityScore() {
+		return similarityScore;
+	}
+
+	public void setSimilarityScore(double similarityScore) {
+		this.similarityScore = similarityScore;
+	}
+
+	public ArrayList<Post> getTopKrelatedQuestions() {
+		return topKrelatedQuestions;
+	}
+
+	public void setTopKrelatedQuestions(ArrayList<Post> topKrelatedQuestions) {
+		this.topKrelatedQuestions = topKrelatedQuestions;
+	}
+
 	public String getTags() {
 		return tags;
 	}
@@ -145,10 +236,7 @@ public class Posts {
 		this.tags = tags;
 	}
 
-	@Override
-	public String toString() {
-		return "Posts [id=" + id + ", body=" + body + ", title=" + title + ", tags=" + tags + "]";
-	}
+	
 
 	public Integer getPostTypeId() {
 		return postTypeId;
@@ -282,12 +370,59 @@ public class Posts {
 		return serialVersionUID;
 	}
 
-	public String getTagsSyn() {
-		return tagsSyn;
+	
+
+	public List<Comment> getComments() {
+		return comments;
 	}
 
-	public void setTagsSyn(String tagsSyn) {
-		this.tagsSyn = tagsSyn;
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
+
+
+	public Set<String> getClassesNames() {
+		return classesNames;
+	}
+
+	public void setClassesNames(Set<String> classesNames) {
+		this.classesNames = classesNames;
+	}
+
+	
+
+	public Integer getRelationTypeId() {
+		return relationTypeId;
+	}
+
+	public void setRelationTypeId(Integer relationTypeId) {
+		this.relationTypeId = relationTypeId;
+	}
+
+	public String getProcessedBody() {
+		return processedBody;
+	}
+
+	public void setProcessedBody(String processedBody) {
+		this.processedBody = processedBody;
+	}
+
+	public String getProcessedTitle() {
+		return processedTitle;
+	}
+
+	public void setProcessedTitle(String processedTitle) {
+		this.processedTitle = processedTitle;
 	}
 
 	public String getCode() {
@@ -298,7 +433,45 @@ public class Posts {
 		this.code = code;
 	}
 
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", body=" + body + ", processedBody=" + processedBody + ", title=" + title
+				+ ", processedTitle=" + processedTitle + ", tags=" + tags + ", code=" + code + "]";
+	}
 
+	public String getProcessedCode() {
+		return processedCode;
+	}
+
+	public void setProcessedCode(String processedCode) {
+		this.processedCode = processedCode;
+	}
+
+	public Post getParent() {
+		return parent;
+	}
+
+	public void setParent(Post parent) {
+		this.parent = parent;
+	}
+
+	public String getProcessedBodyLemma() {
+		return processedBodyLemma;
+	}
+
+	public void setProcessedBodyLemma(String processedBodyLemma) {
+		this.processedBodyLemma = processedBodyLemma;
+	}
+
+	public String getProcessedTitleLemma() {
+		return processedTitleLemma;
+	}
+
+	public void setProcessedTitleLemma(String processedTitleLemma) {
+		this.processedTitleLemma = processedTitleLemma;
+	}
+
+	
 	
 
 	

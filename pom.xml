@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 
-	<name>preprocessor</name>
+	<name>com.ufu</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -104,6 +104,30 @@
 			<version>2.23</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.2</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.testng</groupId>
+		  <artifactId>testng</artifactId>
+		  <version>6.8</version>
+		  <scope>test</scope>
+		</dependency>
+			
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>3.9.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>3.9.1</version>
+		    <classifier>models</classifier>
+		</dependency>	
 
 	</dependencies>
 

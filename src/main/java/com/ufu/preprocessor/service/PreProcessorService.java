@@ -1,7 +1,6 @@
 package com.ufu.preprocessor.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,9 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ufu.preprocessor.repository.CommentsRepository;
 import com.ufu.preprocessor.repository.GenericRepository;
 import com.ufu.preprocessor.repository.PostsRepository;
-import com.ufu.preprocessor.to.Posts;
+import com.ufu.preprocessor.to.Comment;
+import com.ufu.preprocessor.to.Post;
 import com.ufu.preprocessor.utils.PreProcessorUtils;
 
 
@@ -25,6 +26,9 @@ public class PreProcessorService {
 	
 	@Autowired
 	protected PostsRepository postsRepository;
+	
+	@Autowired
+	protected CommentsRepository commentsRepository;
 	
 	@Autowired
 	protected GenericRepository genericRepository;
@@ -45,9 +49,9 @@ public class PreProcessorService {
 
 	
 	
-	public void stemStop(List<Integer> someIds) throws Exception {
+	public void stemStopOld(List<Integer> someIds) throws Exception {
 		for (Integer questionId : someIds) {
-			Posts question = postsRepository.findOne(questionId);
+			Post question = postsRepository.findOne(questionId);
 						
 			String title = question.getTitle();
 			String body = question.getBody();
@@ -70,11 +74,12 @@ public class PreProcessorService {
 				}
 								
 				tags = utils.tagMastering(tags);												
-				question.setTagsSyn(tags);		
+				//question.setTagsSyn(tags);		
 			
 			}else{
 				question.setTitle(utils.tokenizeStopStem(title));
 				question.setBody(utils.tokenizeStopStem(body));
+				
 			}
 			question.setTags(tags);														
 			postsRepository.save(question);
@@ -86,7 +91,7 @@ public class PreProcessorService {
 
 	public void tagSynCodeGen(List<Integer> someIds) throws Exception {
 		for (Integer questionId : someIds) {
-			Posts question = postsRepository.findOne(questionId);
+			Post question = postsRepository.findOne(questionId);
 			String title = question.getTitle();
 			String body = question.getBody();
 			if(StringUtils.isBlank(title) || StringUtils.isBlank(body)){  //disconsider these cases
@@ -95,7 +100,7 @@ public class PreProcessorService {
 			
 			String tags = question.getTags();
 			tags = utils.tagMastering(tags);												
-			question.setTagsSyn(tags);		
+			//question.setTagsSyn(tags);		
 			
 			String[] bodyContent = utils.separaSomentePalavrasNaoSomentePalavras(body,"body");
 			if (!StringUtils.isBlank(bodyContent[2])) {
@@ -108,15 +113,15 @@ public class PreProcessorService {
 
 
 
-	public List<Posts> getDuplicatedQuestions(String tagFilter) {
+	public List<Post> getDuplicatedQuestions(String tagFilter) {
 		return genericRepository.getDuplicatedQuestions(tagFilter);
 	}
 
 
 
-	public void appendDuplicateToTitles(List<Posts> duplicatedQuestions) {
+	public void appendDuplicateToTitles(List<Post> duplicatedQuestions) {
 		int count = 0;
-		for(Posts question:duplicatedQuestions) {
+		for(Post question:duplicatedQuestions) {
 			if(count%50000==0) {
 				logger.info("appending duplicate to title of question "+count+ " of "+duplicatedQuestions.size());
 			}
@@ -127,7 +132,56 @@ public class PreProcessorService {
 		
 	}
 
+	@Transactional(readOnly = true)
+	public List<Integer> findAllPostsIds() {
+		return postsRepository.findAllPostsIds();
+	}
 
+	
+
+	@Transactional(readOnly = true)
+	public List<Post> findSomePosts() {
+		return postsRepository.findSomePosts();
+	}
+
+
+	@Transactional(readOnly = true)
+	public Post findPostByPk(Integer postId) {
+		return postsRepository.findOne(postId);
+	}
+
+
+
+	public void savePost(Post post) {
+		postsRepository.save(post);
+		
+	}
+
+
+	@Transactional(readOnly = true)
+	public List<Post> findPostsById(List<Integer> somePosts) {
+		return genericRepository.getPostsByIds(somePosts);
+	}
+
+
+	@Transactional(readOnly = true)
+	public List<Integer> findAllPostsIdsByTag(String tag) {
+		return genericRepository.findAllPostsIdsByTag(tag);
+	}
+
+
+	@Transactional(readOnly = true)
+	public List<Integer> findAllCommentsIds() {
+		return commentsRepository.findAllCommentsIds();
+	}
+
+
+	@Transactional(readOnly = true)
+	public List<Comment> findCommentsById(List<Integer> someCommentsIds) {
+		return genericRepository.getCommentsByIds(someCommentsIds);
+	}
+	
+	
 	
 	
 }

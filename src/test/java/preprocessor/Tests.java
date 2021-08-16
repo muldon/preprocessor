@@ -1,4 +1,8 @@
-package preprocessor;
+package com.ufu;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.ufu.preprocessor.utils.PreProcessorUtils;
 
@@ -16,8 +20,15 @@ public class Tests {
 				"</code></pre>"; 
 				
 		
-		String[] bodyContent = utils.separaSomentePalavrasNaoSomentePalavras(body,"body");
-		System.out.println(bodyContent[2]);
+		//String[] bodyContent = utils.separaSomentePalavrasNaoSomentePalavras(body,"body");
+		//System.out.println(bodyContent[2]);
+	
+		Document doc = Jsoup.parse(body);
+		Elements elems = doc.select("code,pre");
+		String codeText = elems.text();
+		//System.out.println(codeText);
+		
+		 
 		
 	}
 }
