@@ -59,6 +59,7 @@ The logs are displayed in the terminal but you can check if the process ended su
 ## Authors
 
 * Rodrigo Fernandes  - *Initial work* - [Muldon](https://github.com/muldon)
+* Carlos Eduardo - [Carlos](https://github.com/carloseduardoxp)
 * Klerisson Paixao - [Klerisson](http://klerisson.github.io/)
 * Marcelo Maia - [Marcelo](http://buscatextual.cnpq.br/buscatextual/visualizacv.do?id=K4791753E8)
 
